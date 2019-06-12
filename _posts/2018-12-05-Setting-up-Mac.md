@@ -6,7 +6,7 @@ title: Setting up Mac for Development
 How to set up mac for development.
 
 # Mac Setup
-After purging or buying a Mac, you should…
+After purging or buying a Mac, you should...
 
 ## System Preferences
 
