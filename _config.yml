@@ -6,10 +6,7 @@
 name: Ben Burk
 
 # Short bio or description (displayed in the header)
-description: Web Developer from Somewhere
-
-# URL of your avatar or profile pic (you could use your GitHub profile pic)
-avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/jekyll-logo.png
+description: CS & Math Student
 
 #
 # Flags below are optional
@@ -18,12 +15,12 @@ avatar: https://raw.githubusercontent.com/barryclark/jekyll-now/master/images/je
 # Includes an icon in the footer for each username you enter
 footer-links:
   dribbble:
-  email:
+  email: benburk@outlook.com
   facebook:
   flickr:
   github: benburk
   instagram:
-  linkedin:
+  linkedin: benburk
   pinterest:
   rss: # just type anything here for a working RSS icon
   twitter:
