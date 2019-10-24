@@ -1,4 +1,8 @@
-# First Post
+---
+layout: post
+title: First Post
+---
+
 I wanted to start a blog. I decided to use [Jekyll](https://github.com/jekyll/jekyll) and Github pages, as I like the idea of owning my content as opposed to something like medium.
 
 ## Some Requirements
