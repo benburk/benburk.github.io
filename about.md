@@ -4,6 +4,10 @@ title: About
 permalink: /about/
 ---
 
+
+<img src="{{ site.baseurl }}/images/bburk.jpeg" alt="" style="width: 200px;"/>
+
+
 Computer Science and Mathematics Student living in Toronto.
 
 Currently, my favorite programming languages are Python, Rust, and Haskell.

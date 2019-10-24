@@ -13,23 +13,7 @@ layout: default
     Written on {{ page.date | date: "%B %e, %Y" }}
   </div>
 
-  <!-- support for mathjax -->
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-        inlineMath: [['$','$']]
-      }
-    });
-  </script>
-  <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script> 
+  {% include mathjax.html %}
+  {% include utterances.html %}
 
-  <!-- support for utterences comments -->
-  <script src="https://utteranc.es/client.js"
-        repo="benburk/benburk.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-  </script>
 </article>
