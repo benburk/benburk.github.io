@@ -52,7 +52,7 @@ The workflow for building and viewing your site locally:
 
 
 ### Set up comments
-Most blogs use Disqus. Some themes support it by default and it's as easy as adding your account in `_config.yml`. I'm not a big fan of Disqus and use [utteranc.es](https://utteranc.es) instead. It uses Github issues to store comment threads. I created a new file `_includes/utterances.html` with the code below and imported it into `_layouts/post.html` by appending `{% include utterances.html %}`.
+Most blogs use Disqus. Some themes support it by default and it's as easy as adding your account in `_config.yml`. I'm not a big fan of Disqus and use [utteranc.es](https://utteranc.es) instead. It uses Github issues to store comment threads. I created a new file `_includes/utterances.html` with the code below and imported it into `_layouts/post.html` by appending `{ % include utterances.html %}`.
 ```html
 <script src="https://utteranc.es/client.js"
     repo="username/username.github.io"
@@ -64,7 +64,7 @@ Most blogs use Disqus. Some themes support it by default and it's as easy as add
 ```
 
 ### Set up MathJax
-[MathJax](https://www.mathjax.org) is a JavaScript display engine for mathematics. I created a new file `_includes/mathjax.html` with the code below and imported it into `_layouts/post.html` by appending `{% include mathjax.html %}`.
+[MathJax](https://www.mathjax.org) is a JavaScript display engine for mathematics. I created a new file `_includes/mathjax.html` with the code below and imported it into `_layouts/post.html` by appending `{ % include mathjax.html %}`.
 ```html
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
