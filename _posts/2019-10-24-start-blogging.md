@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Make a blog with Jekyll and Github Pages
+title: Blogging with Jekyll and Github Pages
 ---
 
 There are 3 ways to do this:
