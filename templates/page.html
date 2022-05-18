@@ -1,0 +1,44 @@
+{% extends "index.html" %}
+
+{% block title %}
+  {{ page.title }} | {{ config.title }}
+{% endblock title %}
+
+{% block content %}
+<main class="page">
+    <article class="page-content" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 class="page-content-title" itemprop="name headline">{{ page.title }}</h1>
+        <div class="page-content-meta">
+            <time datetime="{{ page.date | date(format="%+") }}" itemprop="datePublished">{{ page.date | date(format="%B %e, %Y") }}</time>
+        </div>
+        <div class="page-content-body" itemprop="articleBody">
+            {{ page.content | safe }}
+        </div>
+    </article>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+            displayMath: [['$$', '$$'], ["\\[", "\\]"]],
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <!-- {% if page.extra.mathjax %} -->
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+    MathJax = {
+        tex: {
+        displayMath: [['$$', '$$'], ["\\[", "\\]"]],
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script> -->
+    <!-- {% endif %} -->
+</main>
+{% endblock content %}
