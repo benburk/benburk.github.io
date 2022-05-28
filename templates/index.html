@@ -45,7 +45,7 @@
             {% block content %}
             <div class="blog-posts">
                 <ul class="blog-posts-list">
-                    {% for page in section.pages | reverse %}
+                    {% for page in section.pages %}
                     <li class="blog-posts-list-item">
                         <span class="blog-posts-list-item-meta">
                             {{ page.date | date(format="%B %e, %Y") }}

@@ -16,6 +16,14 @@
         </div>
     </article>
 
+    <script src="https://utteranc.es/client.js"
+    repo="benburk/benburk.github.io"
+    issue-term="pathname"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+    </script>
+
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
         MathJax = {
@@ -26,19 +34,5 @@
         };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <!-- {% if page.extra.mathjax %} -->
-    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script>
-    MathJax = {
-        tex: {
-        displayMath: [['$$', '$$'], ["\\[", "\\]"]],
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-        }
-    };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script> -->
-    <!-- {% endif %} -->
 </main>
 {% endblock content %}
