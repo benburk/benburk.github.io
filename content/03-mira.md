@@ -145,7 +145,7 @@ An assembler was written in Rust.
 
 ### Assembler directives
 
-```
+```asm
 .str    "hello"
 .strz   "hello" ; null-terminated string
 .u8     5       ; define 8 bit integer
@@ -155,7 +155,7 @@ An assembler was written in Rust.
 
 ### Addressing modes
 
-```
+```asm
 jmp $0x01   ; jump to the address stored at memory address 0x01
 jmp 0x01    ; jump to the address 0x01
 jmp label   ; jump to label or ram address
@@ -173,7 +173,7 @@ add A, arr[1]   ; add the value at memory[arr+1] to A
 For more examples, see
 
 
-```
+```asm
 ; Countdown program
 ; Print A..=0 to the TICKER device
 ; input a: the starting count
@@ -255,7 +255,7 @@ next:   mov arr[y+1], b
 
 The calling convention isn't strict and can be defined by the user. My preference is for the stack to grow downward with post-decrement for push. Here's an example implementation of that
 
-```
+```asm
 - post-decrement stack for push
 - pre-increment for pop
 - PC pushed first, then function args in reverse order
