@@ -124,7 +124,7 @@ Memory-mapped devices are a great way to extend the functionality of the CPU. A 
 
 
 Ticker tape: for printing streams of decimal values
-[tape]: write a value
+[ticker]: write a value
 
 Keyboard:
 [keyboard]: works as a queue of characters
@@ -170,9 +170,6 @@ add A, arr[1]   ; add the value at memory[arr+1] to A
 # Example programs
 
 
-For more examples, see
-
-
 ```asm
 ; Countdown program
 ; Print A..=0 to the TICKER device
@@ -213,21 +210,6 @@ loop:   shl b
 start:  shr c       ; is multiplier odd?
         bcs do_add  ; add the multiplicand
         bne loop    ; else loop while bits remaining in multiplier
-
-
-; Collatz conjecture (12 bytes)
-; input: A
-loop:   mov TICKER, a   ; print value
-        shr a           ; divide by 2
-        bzs end         ; if we hit 0 we're done
-        bcc loop        ; loop while even
-        rol a           ; restore true odd value
-        mov b, a        ; compute a = 3a+1
-        shl a
-        add b
-        inc a           ; a = 3a+1 at this point
-        jmp loop
-end:
 
 
 ; u8 insertion sort
