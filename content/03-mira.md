@@ -7,7 +7,7 @@ Mira is an 8-bit CPU architecture designed to have an efficient implementation i
 
 # Instruction set
 
-The instruction set architecture (ISA) for the CPU takes inspiration from the 6502 and 8008 microprocessors. The CPU is accumulator-based and could be classified as CISC with its variable length instructions and ability to use memory directly as an argument. The featureful and orthogonal ISA makes it quite fun to write programs on. It features:
+The instruction set architecture (ISA) for the CPU takes inspiration from the 6502 and 8008 microprocessors. The CPU is accumulator-based and could be classified as CISC with its variable length instructions and ability to use memory directly as an argument. The feature-rich and orthogonal ISA makes it a joy to write programs for. It features:
 
 - 16 instructions
 - Five registers: an accumulator (A) and four general-purpose registers (B, C, X, Y)
@@ -23,28 +23,28 @@ This is the canonical bit-encoding for the ISA. An implementation is free to shi
 
 ### Flags
 
-On the left, we have the four processor flags. The presence of a letter in a column indicates whether the instruction updates this flag. The flags can not be directly written to or read from. They are modified as a side effect of other instructions, or read when performing conditional branching.
+On the left, we have the four processor flags. The presence of a letter in a column indicates whether the instruction updates this flag. The flags can not be written to or read from directly. They are modified as a side effect of other instructions, or read when performing conditional branching.
 
 - `Negative`: Set if bit 7 of the result is set
 - `Zero`: Set if the result was zero
-- `Carry`: Set if the arithmetic operation produced a carry or borrow. Also holds bits after a shift.
+- `Carry`: Set if the arithmetic operation produced a carry or borrow. It also holds bits after a shift.
 - `oVerflow`: Set if the addition of two like-signed numbers or the subtraction of two unlike-signed numbers produces a result greater than +127 or less than -128.
 
 ### Addressing modes
 
-Shifting our attention to the top-right, we have the addressing modes. All instructions with an `arg` field can use one of the addressing modes in this list. Whether `000` refers to the A register or an immediate (K) depends on the "instruction group".
+Shifting our attention to the top-right, we have the addressing modes. All instructions with an `arg` field can use one of the addressing modes in this list. Whether `000` refers to the A register or an immediate (K) depends on the "instruction group" (explained in following section).
 
-There are 5 registers - A, B, C, X, and Y. A is the accumulator, and is used implicitly as an operand and destination in "Group 0" instructions. B, C, X, and Y are general purpose registers. X and Y also have the ability of being index registers when performing indexed memory addressing. Notably missing is the program counter. All jumps use direct addressing so there's no need to compute offsets, and subroutine return addresses can be stored as constants and loaded into the stack manually.
+There are 5 registers - A, B, C, X, and Y. A is the accumulator, and is used implicitly as an operand and destination in "Group 0" instructions. B, C, X, and Y are general purpose registers. X and Y also have the ability to be index registers when performing indexed memory addressing. Notably missing is a program counter register. All jumps use direct addressing, so there's no need to compute offsets, and function call return addresses can be stored as constants and loaded onto the stack manually.
 
 ### Instruction groups
 
 There are four groups of instructions, indicated by the first two bits of the opcode.
 
-Group 0: Two-operand arithmetic and logical operations. `arg==000` is undefined.
+Group 0: Two-operand arithmetic and logical operations. `arg==000` is a `NOP` instruction.
 
 Group 1: Same as group 0, but the `arg` "becomes the accumulator", and the operation is performed with an immediate (a constant stored in the next byte of the program). `arg==000` is the A register.
 
-Group 2: A move instruction that moves the `arg` to a `dest`. `dest/arg==0` is the A register. If `dest==arg`, then `arg` is an immediate. This also supports moving an immediate to memory. Memory to memory moves are not supported by any implementation but there's nothing instrinsic that would prevent them.
+Group 2: A move instruction that moves the `arg` to a `dest`. `dest/arg==0` is the A register. If `dest==arg`, then `arg` is an immediate. This also supports moving an immediate to memory. Memory to memory moves are not supported by any implementation, but there's nothing instrinsic that would prevent them.
 
 Group 3: Single argument arithmetic and logical operations. `arg==0` is the A register. Shoehorned into this group are the conditional and unconditional jump instructions. For unconditional jumps, `arg==0` is an immediate. Conditional jumps use the conditions in the bottom-right branching table. The opcode can be read as B`[nzcv][cs]` for the four flags and carry/set.
 
@@ -73,33 +73,33 @@ It also incorporates techniques to reduce the number of updates it causes during
 
 > Why no SEC/CLC instructions like the 6502?
 
-Having inc/dec operate on the accumulator, as well as dedicated add and sub instructions make this unneeded.
+The 6502 couldn't inc/dec the accumulator, and it didn't have add/sub without carry instructions. Having these instructions makes SEC/CLC unneeded.
 
 > Why don't INC and DEC update carry flag?
 
-- Allows for carry to be preserved/used across iterations in loops
-- Easy to detect the same roll overs with N and Z flags
-- Allows a loop counter to be updated without disturbing the CF flag
+- Allows for carry flag to be preserved/used across iterations in loops
+- It's just as easy to detect roll-overs using N and Z flags
 - x86 does it the same way
 
 > Why no dedicated call/subroutine instructions?
 
 - Would likely violate 1 cycle per byte of instruction objective
-- The data path for these instructions complicated, they require post/pre increment/decrement support on a stack pointer
+- The data path for these instructions is complicated, they require post/pre increment/decrement support on a stack pointer
 - Don't want to waste a full register on a stack pointer
 - User can decide what calling convention is most efficient
 - They can memory-map a stack, allowing for a call in 5 cycles and a return in 2 cycles
 
 > Why no fancy hardware, such as stack, barrel-shifter, multiplier, etc.?
 
-- Need to add fixed hardware that you won't necessarily use
+- Complex hardware optimizes for specific instead of general-purpose workloads
+- Increases the size of the CPU
 - Data paths become more complicated, likely not possible under the current speed constraints
-- Trivial to memory-map, which is much more flexible
+- Trivial to memory-map, which is a much more flexible approach
 
 > Why not use port-mapped I/O?
 
 - An ISA would likely force it to go through the accumulator instead of a register directly
-- My implementation allows you to use different addressing modes
+- Memory-mapped allows you to use different addressing modes
 - Like the point on fancier hardware, you're implementing something a program might not necessarily need, and might not be enough when you do
 
 > Why an accumulator architecture as opposed to a 3-op load-store?
@@ -107,9 +107,7 @@ Having inc/dec operate on the accumulator, as well as dedicated add and sub inst
 - Smaller program sizes due to denser instruction set
 - Simpler and speedier execution unit due to accumulator dataloop
 - Requires fewer components, lack of dual read registers, register decoders
-- A load-store variant would require a 16-bit ISA
-
-If you have any other questions, please leave a comment or send me an email!
+- A load-store variant would require a 16-bit ISA, increasing instruction cache pressure
 
 # Memory-mapped I/O
 
@@ -118,7 +116,7 @@ Memory-mapped devices are a great way to extend the functionality of the CPU. A 
 ```
 8x16 TTY Screen
 [screen]: read char at cursor, write char to cursor
-[flags]: auto-increment
+[flags]: auto-increment, clear, character-set, etc.
 [cursor]: the index location of where to write to
 7-bit value for location of character, rrrcccc
 
@@ -131,12 +129,12 @@ Keyboard:
 [flags]: blocking/non-blocking read
 
 Multiplier 8x8=16
-[multiplicand]: Write arg, reads lower byte of product
-[multiplier]: Write arg, reads upper byte of product
+[multiplicand]: Write multiplicand, read lower byte of product
+[multiplier]: Write multiplier, read upper byte of product
 
 Divider 8/8=(8,8) 
-divident/quotient
-divisor/remainder
+[dividend]: Write dividend, read quotient
+[divisor]: Write divisor, read remainder
 ```
 
 # Assembler
@@ -168,7 +166,6 @@ add A, arr[1]   ; add the value at memory[arr+1] to A
 ```
 
 # Example programs
-
 
 ```asm
 ; Countdown program
@@ -204,7 +201,6 @@ start:  shr b       ; shift LSB into carry flag
 ; multiplicant in b
 ; multiplier in c
 ; output in a
-
 do_add: add b
 loop:   shl b
 start:  shr c       ; is multiplier odd?
