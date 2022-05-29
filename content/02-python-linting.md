@@ -76,11 +76,12 @@ The `float_to_top` setting will move all imports in the module to the top of the
 
 > Pylint is a Python static code analysis tool which looks for programming errors, helps enforcing a coding standard, sniffs for code smells and offers simple refactoring suggestions.
 
-Besides checking your code for actual errors that would immediately crash at runtime, I also appreciate some of the more opinionated design lints. They check things such as
+Besides checking your code for actual errors that would immediately crash at runtime, I also appreciate some of the more opinionated design lints.
+
+For example, if your class only has two functions, and one of those functions is `__init__`, it probably shouldn't be a class. Or if you have a method that takes in `self` but doesn't use it, it could be a function instead. Other checks include
 - Code duplication
 - Code complexity
 - Docstring formatting
-- Whether something truly needs to be a class or method
 
 Pylint also provides [optional extensions](https://pylint.pycqa.org/en/v2.14.0-b1/technical_reference/extensions.html) which I try to enable as many as possible. Of note is the docstring extension which checks docstrings match the function signature.
 

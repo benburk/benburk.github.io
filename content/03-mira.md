@@ -46,7 +46,7 @@ Group 1: Same as group 0, but the `arg` "becomes the accumulator", and the opera
 
 Group 2: A move instruction that moves the `arg` to a `dest`. `dest/arg==0` is the A register. If `dest==arg`, then `arg` is an immediate. This also supports moving an immediate to memory. Memory to memory moves are not supported by any implementation, but there's nothing instrinsic that would prevent them.
 
-Group 3: Single argument arithmetic and logical operations. `arg==0` is the A register. Shoehorned into this group are the conditional and unconditional jump instructions. For unconditional jumps, `arg==0` is an immediate. Conditional jumps use the conditions in the bottom-right branching table. The opcode can be read as B`[nzcv][cs]` for the four flags and carry/set.
+Group 3: Single argument arithmetic and logical operations. `arg==0` is the A register. Shoehorned into this group are the conditional and unconditional jump instructions. For unconditional jumps, `arg==0` is an immediate. Conditional jumps use the conditions in the bottom-right branching table. For example, to banch if the carry flag is set, use `bcs`, for branch if carry clear, use `bcc`. The same goes for the other flags `n,z,v`.
 
 # Minecraft implementation details
 

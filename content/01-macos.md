@@ -15,6 +15,11 @@ I try to factory reset my laptop once a year in order to:
 
 Since Monterey, it is quite easy using Erase All Content and Settings in System Preferences. [Apple Guide](https://support.apple.com/en-ca/HT212749)
 
+# Command line tools
+
+```bash
+xcode-select --install
+```
 
 # Zsh
 
