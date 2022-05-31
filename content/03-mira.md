@@ -208,6 +208,21 @@ start:  shr c       ; is multiplier odd?
         bne loop    ; else loop while bits remaining in multiplier
 
 
+; Collatz conjecture (14 bytes)
+; starting value in A
+loop:   mov TICKER, a   ; print value
+        shr a           ; divide by 2
+        bzs end         ; if we hit 0 we're done
+        bcc loop        ; loop while even
+        rol a           ; restore true odd value
+        mov b, a        ; compute a = 3a+1
+        shl a
+        add b
+        inc a           ; a = 3a+1 at this point
+        jmp loop
+end:
+
+
 ; u8 insertion sort
 arr:    .u8 8, 6, 4, 10, 36, 23, 48, 12, 42, 5
 
