@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://benburk.github.io/sitemap.xml

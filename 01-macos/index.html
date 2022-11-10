@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta http-equiv="content-type" content="text/html; charset=utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
+
+      <title>
+  Bootstrapping macOS for development | Ben Burk
+</title>
+
+      <link rel="stylesheet" href="https://benburk.github.io/henry.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700|Roboto+Slab|Source+Code+Pro">
+
+      
+
+      
+      
+    </head>
+
+    <body>
+        <header>
+            <div class="header-content">
+                <a class="header-content-title" href="https:&#x2F;&#x2F;benburk.github.io">Ben Burk</a>
+                <nav class="header-content-nav">
+                    <a href="#" class="header-content-nav-icon">
+                    <svg viewBox="0 0 18 15" width="18">
+                        <path fill="#5c5c5c" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+                        <path fill="#5c5c5c" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+                        <path fill="#5c5c5c" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+                    </svg>
+                    </a>
+                    <div class="header-content-nav-trigger">
+                        
+                        
+                        <a class="header-content-nav-trigger-link" href="&#x2F;about">About</a>
+                        
+                        
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <main class="blog">
+            
+<main class="page">
+    <article class="page-content" itemscope itemtype="http://schema.org/BlogPosting">
+        <h1 class="page-content-title" itemprop="name headline">Bootstrapping macOS for development</h1>
+        <div class="page-content-meta">
+            <time datetime="2022-01-07T00:00:00+00:00" itemprop="datePublished">January  7, 2022</time>
+        </div>
+        <div class="page-content-body" itemprop="articleBody">
+            <p>This post provides an overview of how I configure my mac for development and general use. I use this for my own personal reference, and share it here to provide ideas for others.</p>
+<h1 id="starting-fresh">Starting fresh</h1>
+<p>I like to factory reset my computer once a year to</p>
+<ul>
+<li>test my backup strategies</li>
+<li>consider which tools and applications I still like using in my workflow</li>
+<li>clear out loose files and cruft that have accumulated on my system</li>
+<li>make the computer feel like new</li>
+</ul>
+<p>macOS Monterey made it easier to reset a Mac using the &quot;Erase All Content and Settings&quot; feature. <a href="https://support.apple.com/en-ca/HT212749">Apple Guide</a></p>
+<h1 id="command-line-tools">Command line tools</h1>
+<p>First, we install macOS command line tools. This package enables UNIX-style development via Terminal by installing command line developer tools, such as the Apple LLVM compiler, linker, and Make. The full set of tools exists in this folder <code>/Library/Developer/CommandLineTools/usr/bin/</code>. It also includes macOS SDK frameworks and headers.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">xcode-select --install
+</span></code></pre>
+<h1 id="zsh">Zsh</h1>
+<p>Since macOS Catalina, <code>zsh</code> comes installed as the default shell. I use <a href="https://ohmyz.sh">Oh-my-zsh</a> for plugins.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># 1. Install oh-my-zsh (https://ohmyz.sh/#install)
+</span><span style="color:#bf616a;">sh -c </span><span>&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">curl -fsSL</span><span style="color:#a3be8c;"> https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)</span><span>&quot;
+</span><span>
+</span><span style="color:#65737e;"># 2. Download zsh plugins
+</span><span style="color:#bf616a;">git</span><span> clone https://github.com/zsh-users/zsh-autosuggestions.git $</span><span style="color:#bf616a;">ZSH_CUSTOM</span><span>/plugins/zsh-autosuggestions
+</span><span style="color:#bf616a;">git</span><span> clone https://github.com/zsh-users/zsh-syntax-highlighting.git $</span><span style="color:#bf616a;">ZSH_CUSTOM</span><span>/plugins/zsh-syntax-highlighting
+</span></code></pre>
+<h1 id="homebrew">Homebrew</h1>
+<p>Homebrew isn't without its flaws, but remains one of the better and most popular package managers one can use on a Mac. Homebrew allows one to install command line tools as well as GUI applications using <code>--casks</code>. It also provides a convenient way of upgrading and uninstalling applications.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># 1. Install homebrew (https://brew.sh)
+</span><span style="color:#bf616a;">/bin/bash -c </span><span>&quot;$</span><span style="color:#a3be8c;">(</span><span style="color:#bf616a;">curl -fsSL</span><span style="color:#a3be8c;"> https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)</span><span>&quot;
+</span><span>
+</span><span style="color:#65737e;"># 2. Install some additional command line tools
+</span><span style="color:#bf616a;">brew</span><span> install rg fd fzf git vale helix
+</span><span style="color:#bf616a;">/usr/local/opt/fzf/install  </span><span style="color:#65737e;"># fzf setup
+</span><span>
+</span><span style="color:#65737e;"># Quick-look plugins https://www.quicklookplugins.com
+</span><span style="color:#bf616a;">brew</span><span> install</span><span style="color:#bf616a;"> --cask</span><span> qlcolorcode qlstephen
+</span><span>
+</span><span style="color:#65737e;"># Applications
+</span><span style="color:#bf616a;">brew</span><span> install</span><span style="color:#bf616a;"> --cask</span><span> 1password karabiner-elements telegram visual-studio-code iina qbittorrent obsidian logisim-evolution selfcontrol nordvpn cryptomator
+</span></code></pre>
+<h1 id="rust">Rust</h1>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#65737e;"># https://www.rust-lang.org/tools/install
+</span><span style="color:#bf616a;">curl --proto </span><span>&#39;</span><span style="color:#a3be8c;">=https</span><span>&#39;</span><span style="color:#bf616a;"> --tlsv1</span><span>.2</span><span style="color:#bf616a;"> -sSf</span><span> https://sh.rustup.rs | </span><span style="color:#bf616a;">sh
+</span><span>
+</span><span style="color:#65737e;"># Install formatting tool
+</span><span style="color:#bf616a;">rustup</span><span> component add rustfmt
+</span></code></pre>
+<h1 id="python">Python</h1>
+<p>If you need more than one Python version installed, consider using <code>pyenv</code>.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">brew</span><span> install python
+</span><span>
+</span><span style="color:#65737e;"># dependencies I like
+</span><span style="color:#bf616a;">pip</span><span> install &quot;</span><span style="color:#a3be8c;">black==22.8.0</span><span>&quot; &quot;</span><span style="color:#a3be8c;">isort==5.10.1</span><span>&quot; &quot;</span><span style="color:#a3be8c;">mypy==0.971</span><span>&quot; &quot;</span><span style="color:#a3be8c;">pylint==2.15.3</span><span>&quot; &quot;</span><span style="color:#a3be8c;">pytest==7.1.3</span><span>&quot; &quot;</span><span style="color:#a3be8c;">pytest-cov==3.0.0</span><span>&quot; &quot;</span><span style="color:#a3be8c;">refurb</span><span>&quot;
+</span></code></pre>
+<h1 id="dotfiles">Dotfiles</h1>
+<p>At one point, I tried to make everything work out of <code>$XDG_CONFIG_HOME</code>. Inevitably one tool wouldn't respect it (e.g. ) and break the convention. I have since just opted to define my own dotfile structure and then symlink the files to their appropriate locations.</p>
+<p>Some people choose to use <a href="https://wiki.archlinux.org/title/Dotfiles#Tools">programs</a> to manage this but I appreciate the simplicity of my current setup.</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">mkdir ~</span><span>/dotfiles
+</span><span style="color:#bf616a;">git</span><span> clone https://github.com/benburk/dotfiles </span><span style="color:#bf616a;">~</span><span>/dotfiles
+</span><span style="color:#bf616a;">./dotfiles/install_dotfiles
+</span></code></pre>
+<h1 id="system-preferences">System preferences</h1>
+<p>The <code>defaults</code> command can configure these preferences programmatically. I might move to that. <a href="https://github.com/mathiasbynens/dotfiles/blob/master/.macos">Example</a></p>
+<h2 id="finder">Finder</h2>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>General -&gt; New Finder windows show -&gt; SynologyDrive
+</span><span>Sidebar -&gt; Show home directory
+</span><span>Sidebar -&gt; Hide Recents, Documents
+</span><span>Advanced -&gt; Show filename extensions
+</span><span>Advanced -&gt; Don&#39;t show warning before changing an extension
+</span><span>Advanced -&gt; Don&#39;t show warning before removing from iCloud Drive
+</span><span>Advanced -&gt; Don&#39;t show warning before emptying trash
+</span><span>Advanced -&gt; Keep folders on top when sorting by name
+</span><span>Advanced -&gt; When performing a search: Search the current folder
+</span></code></pre>
+<h2 id="safari">Safari</h2>
+<p>Paid extensions downloaded via App Store: SponsorBlock, and Wipr.</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>General -&gt; Don&#39;t open safe files after downloading
+</span><span>Tabs -&gt; Tab Layout -&gt; Compact
+</span><span>Autofill -&gt; Disable all
+</span><span>Search -&gt; Search engine -&gt; DuckDuckGo
+</span></code></pre>
+<h2 id="terminal">Terminal</h2>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Download nord theme from https://github.com/arcticicestudio/nord-terminal-app
+</span><span>Profiles -&gt; Import -&gt; Nord.terminal
+</span><span>Nord profile -&gt; Set default
+</span><span>Keyboard -&gt; Use Option as Meta key
+</span></code></pre>
+<h2 id="system-preferences-1">System preferences</h2>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>Dock &amp; Menu Bar
+</span><span>- Automatically hide and show the Dock
+</span><span>- Don&#39;t show recent applications in Dock
+</span><span>- Battery -&gt; Show percentage
+</span><span>- Clock -&gt; Display the time with seconds
+</span><span>- Spotlight -&gt; Don&#39;t show in menu bar
+</span><span>- Siri -&gt; Don&#39;t show in menu bar
+</span><span>
+</span><span>Mission Control
+</span><span>- Don&#39;t Automatically rearrange Spaces based on most recent use
+</span><span>
+</span><span>Spotlight
+</span><span>- Enable Applications, Calculator, Conversion, Definition, Music
+</span><span>
+</span><span>Keyboard
+</span><span>- Press Globe -&gt; Do Nothing
+</span><span>- Touch Bar shows -&gt; Expanded Control Strip
+</span><span>- Text -&gt; Disable autocorrect, smart quotes, and dashes
+</span><span>- Shortcuts -&gt; Mission Control -&gt; Switch to Desktop 1-9
+</span><span>
+</span><span>Trackpad
+</span><span>- Point &amp; Click -&gt; Secondary click -&gt; Click in bottom right corner
+</span><span>- Point &amp; Click -&gt; Tap to click -&gt; Click with one finger
+</span></code></pre>
+<h1 id="ios">iOS</h1>
+<ul>
+<li>Apps: Obsidian, Fastmail, WolframAlpha</li>
+</ul>
+<h1 id="further-reading">Further reading</h1>
+<ul>
+<li><a href="https://blog.bejarano.io/hardening-macos.html">Hardening macOS</a></li>
+<li><a href="https://sourabhbajaj.com/mac-setup/">macOS setup guide</a></li>
+<li><a href="https://news.ycombinator.com/item?id=24091707">Ask HN: What feature did you find after years of using macOS? (2020)</a></li>
+<li><a href="https://danmackinlay.name/notebook/macos_hacks.html">Making macOS behave itself</a></li>
+</ul>
+
+        </div>
+    </article>
+
+    <script src="https://utteranc.es/client.js"
+    repo="benburk/benburk.github.io"
+    issue-term="pathname"
+    theme="github-light"
+    crossorigin="anonymous"
+    async>
+    </script>
+
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+            displayMath: [['$$', '$$'], ["\\[", "\\]"]],
+            inlineMath: [['$', '$'], ['\\(', '\\)']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</main>
+
+        </main>
+
+        <footer>
+            <div class="footer-content">
+            <div class="footer-content-left">
+                
+            </div>
+            <div class="footer-content-right">
+                
+                
+                <a href="https:&#x2F;&#x2F;github.com&#x2F;benburk">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="20">
+                        <path fill="#1e1e1e" d="M512 0C229.25 0 0 229.25 0 512c0 226.25 146.688 418.125 350.156 485.812 25.594 4.688 34.938-11.125 34.938-24.625 0-12.188-.469-52.562-.719-95.312C242 908.812 211.906 817.5 211.906 817.5c-23.312-59.125-56.844-74.875-56.844-74.875-46.531-31.75 3.53-31.125 3.53-31.125 51.406 3.562 78.47 52.75 78.47 52.75 45.688 78.25 119.875 55.625 149 42.5 4.654-33 17.904-55.625 32.5-68.375-113.656-12.937-233.218-56.875-233.218-253.063 0-55.938 19.969-101.562 52.656-137.406-5.219-13-22.844-65.094 5.062-135.562 0 0 42.938-13.75 140.812 52.5 40.812-11.406 84.594-17.031 128.125-17.219 43.5.188 87.312 5.875 128.188 17.281 97.688-66.312 140.688-52.5 140.688-52.5 28 70.531 10.375 122.562 5.125 135.5 32.812 35.844 52.625 81.469 52.625 137.406 0 196.688-119.75 240-233.812 252.688 18.438 15.875 34.75 47 34.75 94.75 0 68.438-.688 123.625-.688 140.5 0 13.625 9.312 29.562 35.25 24.562C877.438 930 1024 738.125 1024 512 1024 229.25 794.75 0 512 0z"/>
+                    </svg>
+                </a>
+                
+            </div>
+            </div>
+        </footer>
+    </body>
+</html>
