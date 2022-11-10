@@ -17,7 +17,8 @@ The instruction set architecture (ISA) for the CPU takes inspiration from the 65
 - 8-bit address space (can use Harvard or Von-Neumann layout, and [bank switching](https://en.wikipedia.org/wiki/Bank_switching) to increase it)
 - Memory-mapped I/O
 
-![ISA](/mira-isa.png)
+<!-- ![ISA](./content/images/mira-isa.png) -->
+![ISA](/images/mira-isa.png)
 
 This is the canonical bit-encoding for the ISA. An implementation is free to shift instructions and bits around to decode it more efficiently, as was done for Minecraft. An implementation is considered valid as long as any assembly program can be executed on it.
 
@@ -286,5 +287,4 @@ my_func:
 - Implement a [super-optimizer](https://en.wikipedia.org/wiki/Superoptimization)
 - Polish assembler and emulator
 - 4-tick implementation :O
-
 

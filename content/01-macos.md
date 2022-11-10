@@ -3,84 +3,74 @@ title = "Bootstrapping macOS for development"
 date = 2022-01-07
 +++
 
-This is an overview of how I configure my mac for my workflow. I do software development in Rust and Python, write notes, and browse the web. 
+This post provides an overview of how I configure my mac for development and general use. I use this for my own personal reference, and share it here to provide ideas for others.
 
 # Starting fresh
-
-I try to factory reset my laptop once a year in order to:
-- test and evaluate my backup strategies
-- evaluate my workflow and tools I use to keep it simple
+I like to factory reset my computer once a year to
+- test my backup strategies
+- consider which tools and applications I still like using in my workflow
+- clear out loose files and cruft that have accumulated on my system
 - make the computer feel like new
-- clear out loose files that get sprawled across OS
 
-Since Monterey, it is quite easy using Erase All Content and Settings in System Preferences. [Apple Guide](https://support.apple.com/en-ca/HT212749)
+macOS Monterey made it easier to reset a Mac using the "Erase All Content and Settings" feature. [Apple Guide](https://support.apple.com/en-ca/HT212749)
 
 # Command line tools
+First, we install macOS command line tools. This package enables UNIX-style development via Terminal by installing command line developer tools, such as the Apple LLVM compiler, linker, and Make. The full set of tools exists in this folder `/Library/Developer/CommandLineTools/usr/bin/`. It also includes macOS SDK frameworks and headers.
 
 ```bash
 xcode-select --install
 ```
 
+
 # Zsh
-
-Zsh is the default shell in macOS since Catalina. I used to use Fish, but I find I'm able to get most of what I liked about it through Zsh plugins.
-
+Since macOS Catalina, `zsh` comes installed as the default shell. I use [Oh-my-zsh](https://ohmyz.sh) for plugins.
 ```bash
-# https://ohmyz.sh/#install
+# 1. Install oh-my-zsh (https://ohmyz.sh/#install)
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Download zsh plugins
+# 2. Download zsh plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
 ```
 
 # Homebrew
 
-Homebrew isn't without its flaws but overall remains one of the better package managers one can use on a mac.
-
+Homebrew isn't without its flaws, but remains one of the better and most popular package managers one can use on a Mac. Homebrew allows one to install command line tools as well as GUI applications using `--casks`. It also provides a convenient way of upgrading and uninstalling applications.
 ```bash
-# https://brew.sh
+# 1. Install homebrew (https://brew.sh)
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-# essential tools
-brew install rg fd fzf
+# 2. Install some additional command line tools
+brew install rg fd fzf git vale helix
 /usr/local/opt/fzf/install  # fzf setup
 
-# quick look plugins https://www.quicklookplugins.com
+# Quick-look plugins https://www.quicklookplugins.com
 brew install --cask qlcolorcode qlstephen
-```
 
 # Applications
-
-From the App Store I download 1Password, Telegram, Wipr, NordVPN.
-
-```bash
-brew install --cask karabiner-elements visual-studio-code iina qbittorrent obsidian
+brew install --cask 1password karabiner-elements telegram visual-studio-code iina qbittorrent obsidian logisim-evolution selfcontrol nordvpn cryptomator
 ```
 
 # Rust
-
 ```bash
 # https://www.rust-lang.org/tools/install
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install formatting tool
 rustup component add rustfmt
 ```
 
 # Python
-
-Not completely decided on whether to install python from homebrew or the [website installer](https://www.python.org/downloads/)
-
+If you need more than one Python version installed, consider using `pyenv`.
 ```bash
-brew install python
+brew install python
+
+# dependencies I like
+pip install "black==22.8.0" "isort==5.10.1" "mypy==0.971" "pylint==2.15.3" "pytest==7.1.3" "pytest-cov==3.0.0" "refurb"
 ```
 
-- Poetry
-- invoke + tasks.py
-
-
 # Dotfiles
-
-At one point I tried to make everything work out of `$XDG_CONFIG_HOME`. Inevitably one tool wouldn't respect it and break the convention. I have since just opted to define my own structure and then symlink the files to their appropriate locations.
+At one point, I tried to make everything work out of `$XDG_CONFIG_HOME`. Inevitably one tool wouldn't respect it (e.g. ) and break the convention. I have since just opted to define my own dotfile structure and then symlink the files to their appropriate locations.
 
 Some people choose to use [programs](https://wiki.archlinux.org/title/Dotfiles#Tools) to manage this but I appreciate the simplicity of my current setup.
 
@@ -92,8 +82,7 @@ git clone https://github.com/benburk/dotfiles ~/dotfiles
 
 
 # System preferences
-
-These can be set using defaults commands. I might move to that. [Example](https://github.com/mathiasbynens/dotfiles/blob/master/.macos)
+The `defaults` command can configure these preferences programmatically. I might move to that. [Example](https://github.com/mathiasbynens/dotfiles/blob/master/.macos)
 
 ## Finder
 ```
@@ -109,6 +98,7 @@ Advanced -> When performing a search: Search the current folder
 ```
 
 ## Safari
+Paid extensions downloaded via App Store: SponsorBlock, and Wipr.
 ```
 General -> Don't open safe files after downloading
 Tabs -> Tab Layout -> Compact
@@ -152,8 +142,10 @@ Trackpad
 ```
 
 
-# Further reading
+# iOS
+- Apps: Obsidian, Fastmail, WolframAlpha
 
+# Further reading
 - [Hardening macOS](https://blog.bejarano.io/hardening-macos.html)
 - [macOS setup guide](https://sourabhbajaj.com/mac-setup/)
 - [Ask HN: What feature did you find after years of using macOS? (2020)](https://news.ycombinator.com/item?id=24091707)

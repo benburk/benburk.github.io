@@ -1,3 +1,9 @@
 # Blog
 
-My blog.
+I use Zola.
+
+# Running
+
+```shell
+zola serve
+```
